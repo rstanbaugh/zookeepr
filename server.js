@@ -1,14 +1,14 @@
 const express = require('express');
+const { animals } = require('./data/animals');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-const {animals} = require('./data/animals');
 
 
 // filter reaults by query
 function filterByQuery(query, animalsArray){
-  let personalityTraisArray = [];
+  let personalityTraitsArray = [];
 
   // note that we will save the animalsArray as filteredResults here
   let filteredResults = animalsArray;
@@ -16,13 +16,13 @@ function filterByQuery(query, animalsArray){
     // save personalityTraits to a dedicated array
     // if personalityTraits is a string, place it into a new array and save
     if(typeof query.personalityTraits === 'string'){
-      personalityTraisArray = [query.personalityTraits];
+      personalityTraitsArray = [query.personalityTraits];
     } else {
-      personalityTraisArray = query.personalityTraits;
+      personalityTraitsArray = query.personalityTraits;
     }
   }
   // loop through each trait in the personalityTraits array:
-  personalityTraisArray.forEach(trait => {
+  personalityTraitsArray.forEach(trait => {
     // check the trait against each animal in the filteredResults array
     // remember, it is initially a copy of teh animalsArray
     // but here we're updating it for each trait in teh .forEch() loop
@@ -46,14 +46,28 @@ function filterByQuery(query, animalsArray){
   return filteredResults;
 };
 
+function findById(id, animalsArray){
+  const result = animalsArray.filter(animal => animal.id === id)[0];
+  return result;
+}
 
-// route listener
+
+// route listeners
 app.get('/api/animals', (req, res) => {
   let results = animals;
   if (req.query){
     results = filterByQuery(req.query, results);
   }
   res.json(results);
+});
+
+app.get('/api/animals/:id', (req, res) => {
+  const result = findById(req.params.id, animals);
+  if(result){
+    res.json(result);
+  } else {
+    req.setEncoding(404);
+  }
 });
 
 //  start the express server
