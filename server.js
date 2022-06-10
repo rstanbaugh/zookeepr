@@ -9,10 +9,12 @@ const app = express();
 app.use(express.urlencoded({extended: true}));
 // parse incoming JSON data
 app.use(express.json());
-
+// provides routes to static files like css and js 
+app.use(express.static('public'));
 
 // function to validate the animal fields
 function validateAnimal(animal){
+  console.log(animal);
   if(!animal.name || typeof animal.name !== 'string'){
     return false;
   }
@@ -22,7 +24,7 @@ function validateAnimal(animal){
   if(!animal.diet || typeof animal.diet !== 'string'){
     return false;
   }
-  if(!animal.personalityTraits || typeof animal.personalityTraits !== 'string'){
+  if(!animal.personalityTraits || !Array.isArray(animal.personalityTraits)){
     return false;
   }
   return true;
@@ -88,7 +90,7 @@ function findById(id, animalsArray){
 
 // route listeners
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, './public/index.html'));
 });
 
 app.get('/api/animals', (req, res) => {

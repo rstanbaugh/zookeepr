@@ -108,6 +108,25 @@
         "hungry"
       ],
       "id": "10"
+    },
+    {
+      "name": "Sissy",
+      "species": "Housecat",
+      "diet": "carnivore",
+      "personalityTraits": [
+        "loving"
+      ],
+      "id": "11"
+    },
+    {
+      "name": "Loki",
+      "species": "Housecat",
+      "diet": "carnivore",
+      "personalityTraits": [
+        "hungry",
+        "loving"
+      ],
+      "id": "12"
     }
   ]
 }
