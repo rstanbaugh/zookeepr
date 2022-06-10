@@ -1,7 +1,7 @@
 {
   "name": "zookeppr",
   "version": "1.0.0",
-  "description": "",
+  "description": "animal server",
   "main": "server.js",
   "engines": {
     "node": "16.x",
