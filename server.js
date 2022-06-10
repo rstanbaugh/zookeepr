@@ -88,7 +88,7 @@ function findById(id, animalsArray){
 
 // route listeners
 app.get('/', (req, res) => {
-  res.sendfile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.get('/api/animals', (req, res) => {
