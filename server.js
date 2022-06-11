@@ -43,22 +43,22 @@ function  createNewAnimal(body, animalsArray){
 }
 
 // filter reaults by query
-function filterByQuery(query, animalsArray){
+function filterByQuery(query, animalsArray) { 
   let personalityTraitsArray = [];
 
   // note that we will save the animalsArray as filteredResults here
   let filteredResults = animalsArray;
-  if(query.personalityTraits){
+  if (query.personalityTraits) {
     // save personalityTraits to a dedicated array
     // if personalityTraits is a string, place it into a new array and save
-    if(typeof query.personalityTraits === 'string'){
+    if (typeof query.personalityTraits === 'string') {
       personalityTraitsArray = [query.personalityTraits];
     } else {
       personalityTraitsArray = query.personalityTraits;
     }
-  }
-  // loop through each trait in the personalityTraits array:
-  personalityTraitsArray.forEach(trait => {
+
+    // loop through each trait in the personalityTraits array:
+    personalityTraitsArray.forEach(trait => {
     // check the trait against each animal in the filteredResults array
     // remember, it is initially a copy of teh animalsArray
     // but here we're updating it for each trait in teh .forEch() loop
@@ -66,21 +66,22 @@ function filterByQuery(query, animalsArray){
     // array will then contain only the entries that contain the traits
     // so at the end, we'll have an array of animals that have every one
     // of the traits whe the .forEach() loop is finished
-    filteredResults = filteredResults.filter(
-      animal => animal.personalityTraits.indexOf(trait) != -1
-    )
-  });
-  if(query.diet){
-    filteredResults = filteredResults.filter(animal => animal.diet ==query.diet);
+      filteredResults = filteredResults.filter(
+        animal => animal.personalityTraits.indexOf(trait) !== -1
+      );
+    });
   }
-  if(query.species){
+  if (query.diet) {
+    filteredResults = filteredResults.filter(animal => animal.diet === query.diet);
+  }
+  if (query.species) {
     filteredResults = filteredResults.filter(animal => animal.species === query.species);
   }
-  if(query.name){
-    filteredResults = filteredResults.filter(animal => animal.name === query.name)
+  if (query.name) {
+    filteredResults = filteredResults.filter(animal => animal.name === query.name);
   }
   return filteredResults;
-};
+}
 
 function findById(id, animalsArray){
   const result = animalsArray.filter(animal => animal.id === id)[0];
@@ -89,9 +90,6 @@ function findById(id, animalsArray){
 
 
 // route listeners
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, './public/index.html'));
-});
 
 app.get('/api/animals', (req, res) => {
   let results = animals;
@@ -123,6 +121,23 @@ app.post('/api/animals', (req, res) => {
     res.json(req.body);
   }
 
+});
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/index.html'));
+});
+
+app.get('/animals', (req, res) => {
+  res.sendFile(path.join(__dirname,'./public/animals.html'));
+});
+
+app.get('/zookeepers', (req, res) => {
+  res.sendFile(path.join(__dirname,'./public/zookeepers.html'));
+});
+
+// wildcard route
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/index.html'));
 });
 
 
